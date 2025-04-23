@@ -1,96 +1,56 @@
 package org.mylabs.converterlettersnumbers;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MainConverterNumbersToLettersTest {
 
-    MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
-
-    @Test
-    void shouldInput0returnZero() {
-        String input = "0";
-        Assertions.assertEquals("zero", converter.convert(input));
+    @ParameterizedTest
+    @MethodSource("provideTestCases")
+    void testConvert(String input, String expected) {
+        MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
+        String result = converter.convert(input);
+        assertEquals(expected, result);
     }
 
-    @Test
-    void shouldInput1returnOne() {
-        String input = "1";
-        Assertions.assertEquals("one", converter.convert(input));
+    private static Stream<Arguments> provideTestCases() {
+        return Stream.of(
+                Arguments.of("0", "zero"),
+                Arguments.of("1", "one"),
+                Arguments.of("19", "nineteen"),
+                Arguments.of("20", "twenty"),
+                Arguments.of("90", "ninety"),
+                Arguments.of("21", "twenty-one"),
+                Arguments.of("99", "ninety-nine"),
+                Arguments.of("100", "one hundred"),
+                Arguments.of("300", "three hundred"),
+                Arguments.of("156", "one hundred fifty-six"),
+                Arguments.of("1000", "one thousand"),
+                Arguments.of("2343", "two thousand three hundred forty-three")
+        );
     }
 
-    @Test
-    void shouldInput19returnNineteen() {
-        String input = "19";
-        Assertions.assertEquals("Nineteen", converter.convert(input));
+    @ParameterizedTest
+    @MethodSource("provideConverterErrorTestCases")
+    void testConverterThrowsNumberFormatException(String input) {
+        MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
+        assertThrows(NumberFormatException.class,
+                () -> converter.convert(input),
+                "Expected converter() to throw NumberFormatException"
+        );
     }
 
-    @Test
-    void shouldThrowAnExceptionWhenInputStringNotNumeric(){
-        String input = "";
-        Assertions.assertThrowsExactly(NumberFormatException.class, () -> converter.convert(input));
+    private static Stream<Arguments> provideConverterErrorTestCases() {
+        return Stream.of(
+                Arguments.of(""),
+                Arguments.of("AnyString")
+        );
     }
-
-    @Test
-    void shouldInput20ReturnTwenty(){
-        String input = "20";
-        Assertions.assertEquals("twenty", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput90ReturnNinety(){
-        String input = "90";
-        Assertions.assertEquals("ninety", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput21ReturnTwentyOne(){
-        String input = "21";
-        Assertions.assertEquals("twenty-one", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput99ReturnNinetyNine(){
-        String input = "99";
-        Assertions.assertEquals("ninety-nine", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput100ReturnHundred(){
-        String input = "100";
-        Assertions.assertEquals("one hundred", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput300ReturnThreeHundred(){
-        String input = "300";
-        Assertions.assertEquals("three hundred", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput156ReturnOneHundredFiftySix(){
-        String input = "156";
-        Assertions.assertEquals("one hundred fifty-six", converter.convert(input));
-    }
-
-    @Test
-    void shouldInput999ReturnNineHundredNinetyNine(){
-        String input = "999";
-        Assertions.assertEquals("nine hundred ninety-nine", converter.convert(input));
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
