@@ -20,15 +20,15 @@ public class MainConverterNumbersToLetters {
             "eight" ,
             "nine" ,
             "ten",
-            "Eleven",
-            "Twelve",
-            "Thirteen",
-            "Fourteen",
-            "Fifteen",
-            "Sixteen",
-            "Seventeen",
-            "Eighteen",
-            "Nineteen");
+            "eleven",
+            "twelve",
+            "thirteen",
+            "fourteen",
+            "fifteen",
+            "sixteen",
+            "seventeen",
+            "eighteen",
+            "nineteen");
 
     private final List<String> numberAsStringForTens = Arrays.asList(
             "twenty"
@@ -45,25 +45,38 @@ public class MainConverterNumbersToLetters {
         int inputValue = Integer.parseInt(input);
         StringBuilder result = new StringBuilder();
         while(!input.isEmpty()){
-            double pow = Math.pow(10, input.length() - 1);
-            int position = (int) (inputValue / pow);
-            if( pow <= 10 ){
-                if(inputValue > 19){
-                    if(!result.isEmpty()){
+            int pow = (int) Math.pow(10, input.length() - 1);
+            int position = inputValue / pow;
+            switch (pow){
+                case 1000 :
+                {
+                    result.append(numberAsString.get(position));
+                    result.append(" thousand");
+                };break;
+                case 100 : {
+                    if (!result.isEmpty()) {
                         result.append(" ");
                     }
-                    result.append(numberAsStringForTens.get(position - 2));
-                    if(inputValue % pow > 0){
-                        result.append("-");
+                    result.append(numberAsString.get(position));
+                    result.append(" hundred");
+                };break;
+                case 10  : {
+                    if (inputValue > 19) {
+                        if (!result.isEmpty()) {
+                            result.append(" ");
+                        }
+                        result.append(numberAsStringForTens.get(position - 2));
+                        if (inputValue % pow > 0) {
+                            result.append("-");
+                        }
+                    }else{
+                        result.append(numberAsString.get(inputValue));
+                        inputValue = 0;
                     }
-                }else{
-                   return result.append(numberAsString.get(inputValue)).toString();
-                }
-            }else{
-                result.append(numberAsString.get(position));
-                result.append(" hundred");
+                };break;
+                default: result.append(numberAsString.get(inputValue));
             }
-            inputValue = (int) (inputValue % pow);
+            inputValue = inputValue % pow;
             if(inputValue == 0){
                 return result.toString();
             }
