@@ -58,4 +58,20 @@ class MainConverterNumbersToLettersTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideConverterErrorInputTestCases")
+    void testConverterThrowsIllegalArgumentException(String input) {
+        MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
+        assertThrows(IllegalArgumentException.class,
+                () -> converter.convertNumbreToString(input),
+                "Input must be a positive integer."
+        );
+    }
+
+    private static Stream<Arguments> provideConverterErrorInputTestCases() {
+        return Stream.of(
+                Arguments.of("-333")
+        );
+    }
+
 }
