@@ -32,7 +32,12 @@ class MainConverterNumbersToLettersTest {
                 Arguments.of("300", "three hundred"),
                 Arguments.of("156", "one hundred fifty-six"),
                 Arguments.of("1000", "one thousand"),
-                Arguments.of("2343", "two thousand three hundred forty-three")
+                Arguments.of("2343", "two thousand three hundred forty-three"),
+                Arguments.of("10000", "ten thousand"),
+                Arguments.of("100000", "one hundred thousand"),
+                Arguments.of("3000000", "three million"),
+                Arguments.of("9000000000", "nine billion"),
+                Arguments.of("100000000000", "one hundred billion")
         );
     }
 
