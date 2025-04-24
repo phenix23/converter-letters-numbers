@@ -15,7 +15,7 @@ class MainConverterNumbersToLettersTest {
     @MethodSource("provideTestCases")
     void testConvert(String input, String expected) {
         MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
-        String result = converter.convert(input);
+        String result = converter.convertNumbreToString(input);
         assertEquals(expected, result);
     }
 
@@ -41,7 +41,7 @@ class MainConverterNumbersToLettersTest {
     void testConverterThrowsNumberFormatException(String input) {
         MainConverterNumbersToLetters converter = new MainConverterNumbersToLetters();
         assertThrows(NumberFormatException.class,
-                () -> converter.convert(input),
+                () -> converter.convertNumbreToString(input),
                 "Expected converter() to throw NumberFormatException"
         );
     }
