@@ -5,8 +5,8 @@ package org.mylabs.converterlettersnumbers;
  */
 public class MainConverterNumbersToLetters {
 
-    private final List<String> numberAsString = Arrays.asList(
-            "zero",
+    private final String[] numberAsString = {
+            "",
             "one" ,
             "two",
             "three",
@@ -25,18 +25,19 @@ public class MainConverterNumbersToLetters {
             "sixteen",
             "seventeen",
             "eighteen",
-            "nineteen");
+            "nineteen"
+    };
 
-    private final List<String> numberAsStringForTens = Arrays.asList(
+    private final String[] numberAsStringForTens = {
             "twenty"
-           ,"thirty"
-           ,"forty"
-           ,"fifty"
-           ,"sixty"
-           ,"seventy"
-           ,"eighty"
-           ,"ninety"
-    );
+            , "thirty"
+            , "forty"
+            , "fifty"
+            , "sixty"
+            , "seventy"
+            , "eighty"
+            , "ninety"
+    };
 
     public String convertNumbreToString(String input){
         long inputValue = Long.parseLong(input);
