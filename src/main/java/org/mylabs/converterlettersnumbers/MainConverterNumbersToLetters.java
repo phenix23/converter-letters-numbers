@@ -1,8 +1,5 @@
 package org.mylabs.converterlettersnumbers;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  *  Main class that generate Lettres from Numbers
  */
@@ -41,47 +38,27 @@ public class MainConverterNumbersToLetters {
            ,"ninety"
     );
 
-    public String convert(String input) {
-        int inputValue = Integer.parseInt(input);
-        StringBuilder result = new StringBuilder();
-        while(!input.isEmpty()){
-            int pow = (int) Math.pow(10, input.length() - 1);
-            int position = inputValue / pow;
-            switch (pow){
-                case 1000 :
-                {
-                    result.append(numberAsString.get(position));
-                    result.append(" thousand");
-                };break;
-                case 100 : {
-                    if (!result.isEmpty()) {
-                        result.append(" ");
-                    }
-                    result.append(numberAsString.get(position));
-                    result.append(" hundred");
-                };break;
-                case 10  : {
-                    if (inputValue > 19) {
-                        if (!result.isEmpty()) {
-                            result.append(" ");
-                        }
-                        result.append(numberAsStringForTens.get(position - 2));
-                        if (inputValue % pow > 0) {
-                            result.append("-");
-                        }
-                    }else{
-                        result.append(numberAsString.get(inputValue));
-                        inputValue = 0;
-                    }
-                };break;
-                default: result.append(numberAsString.get(inputValue));
-            }
-            inputValue = inputValue % pow;
-            if(inputValue == 0){
-                return result.toString();
-            }
-            input = input.substring(1);
+    public String convertNumbreToString(String input){
+        long inputValue = Long.parseLong(input);
+        if(inputValue < 0){
+            throw new IllegalArgumentException("Input must be a positive integer.");
         }
-        return result.toString();
+        return (inputValue == 0) ?  "zero" : convert(inputValue);
+    }
+
+    public String convert(long inputValue) {
+        if (inputValue < 20) {
+            return numberAsString[Math.toIntExact(inputValue)];
+        } else if (inputValue < 100) {
+            return (inputValue % 10 == 0 ) ? numberAsStringForTens[Math.toIntExact((inputValue / 10) - 2)] : numberAsStringForTens[Math.toIntExact((inputValue / 10) - 2)] + "-" + numberAsString[Math.toIntExact(inputValue % 10)];
+        } else if (inputValue < 1000) {
+            return (inputValue % 100 == 0) ? numberAsString[Math.toIntExact(inputValue / 100)] + " hundred" : numberAsString[Math.toIntExact(inputValue / 100)] + " hundred " + convertNumbreToString(String.valueOf(inputValue % 100));
+        } else if (inputValue < 1000000) {
+            return (inputValue % 1000 == 0 ) ? convertNumbreToString(String.valueOf(inputValue / 1000)) + " thousand" :  convertNumbreToString(String.valueOf(inputValue / 1000)) + " thousand " + convertNumbreToString(String.valueOf(inputValue % 1000));
+        } else if (inputValue < 1000000000) {
+            return (inputValue % 1000000 == 0 ) ? convertNumbreToString(String.valueOf(inputValue / 1000000)) + " million" : convertNumbreToString(String.valueOf(inputValue / 1000000)) + " million " + convertNumbreToString(String.valueOf(inputValue % 1000000));
+        } else {
+            return (inputValue % 1000000000 == 0) ? convertNumbreToString(String.valueOf(inputValue / 1000000000)) + " billion" : convertNumbreToString(String.valueOf(inputValue / 1000000000)) + " billion " + convertNumbreToString(String.valueOf(inputValue % 1000000000));
+        }
     }
 }
