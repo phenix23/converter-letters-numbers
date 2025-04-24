@@ -1,8 +1,12 @@
 package org.mylabs.converterlettersnumbers;
 
+import org.springframework.stereotype.Service;
+
 /**
  *  Main class that generate Lettres from Numbers
  */
+
+@Service
 public class MainConverterNumbersToLetters {
 
     private final String[] numberAsString = {
