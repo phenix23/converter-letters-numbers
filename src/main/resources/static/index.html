@@ -46,7 +46,7 @@
         <form id="form" class="mb-4">
             <div class="mb-3">
                 <label for="number" class="form-label">Enter Number</label>
-                <input type="number" class="form-control" name="number" id="number" min="0" placeholder="Enter Number"/>
+                <input type="number" class="form-control" pattern="\d*" name="number" id="number" min="0" max="999999999999" placeholder="Enter Number"/>
             </div>
             <button type="submit" id="convert-button" class="btn btn-primary">Convert</button>
             <button type="reset" class="btn btn-primary" id="reset-button"> Reset </button>
